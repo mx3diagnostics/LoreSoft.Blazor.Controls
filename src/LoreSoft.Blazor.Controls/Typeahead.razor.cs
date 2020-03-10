@@ -213,7 +213,8 @@ namespace LoreSoft.Blazor.Controls
             }
 
             EditContext?.NotifyFieldChanged(FieldIdentifier);
-            SearchMode = false;
+            // SearchMode = false;
+            await JSRuntime.InvokeAsync<object>("BlazorControls.setFocus", SearchInput);
         }
 
         public async Task RemoveValue(TValue item)
@@ -254,7 +255,7 @@ namespace LoreSoft.Blazor.Controls
             // delay close to allow other events to finish
             await Task.Delay(250);
 
-            SearchMode = false;
+            SearchMode = await JSRuntime.InvokeAsync<bool>("BlazorControls.isFocus", SearchInput);
             Loading = false;
 
             // cleanup event handler

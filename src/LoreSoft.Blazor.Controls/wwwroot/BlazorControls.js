@@ -6,6 +6,12 @@ window.BlazorControls = {
 
         element.focus();
     },
+    isFocus: (element) => {
+        if(!element)
+            return false;
+        
+        return element === document.activeElement;
+    },
     preventEnter: (element, disabled) => {
         if (!element) {
             console.log("Error: preventEnter() element not found");
