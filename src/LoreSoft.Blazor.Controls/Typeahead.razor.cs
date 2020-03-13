@@ -102,6 +102,8 @@ namespace LoreSoft.Blazor.Controls
         [Parameter]
         public FieldIdentifier FieldIdentifier { get; set; }
 
+        [Parameter]
+        public IList<String> ColourValues { get; set; }
 
         public bool Loading { get; set; }
 
@@ -138,7 +140,6 @@ namespace LoreSoft.Blazor.Controls
         }
 
         public int SelectedIndex { get; set; }
-
 
         protected override void OnInitialized()
         {
@@ -319,12 +320,14 @@ namespace LoreSoft.Blazor.Controls
                 : string.Empty;
         }
 
-
         public void Dispose()
         {
             _debounceTimer?.Dispose();
         }
 
+        public string getColourStyling(int idx){
+            return "background : " + ColourValues[idx];
+        }
 
         private void MoveSelection(int count)
         {
