@@ -143,6 +143,9 @@ namespace LoreSoft.Blazor.Controls
 
         protected override void OnInitialized()
         {
+            if(ColourValues == null)
+                ColourValues = Enumerable.Repeat("#e6e6e6", Values.Count).ToList();
+
             if (SearchMethod == null)
                 throw new InvalidOperationException($"{GetType()} requires a {nameof(SearchMethod)} parameter.");
 
@@ -201,10 +204,16 @@ namespace LoreSoft.Blazor.Controls
             if (IsMultiselect())
             {
                 var valueList = Values ?? new List<TValue>();
-                if (valueList.Contains(value))
+
+                if (valueList.Contains(value)){
+                    var idx = valueList.IndexOf(value);
                     valueList.Remove(value);
-                else
+                    ColourValues.RemoveAt(idx);
+                }
+                else{
                     valueList.Add(value);
+                    ColourValues.Add("#e6e6e6");
+                }
 
                 await ValuesChanged.InvokeAsync(valueList);
             }
@@ -221,8 +230,14 @@ namespace LoreSoft.Blazor.Controls
         public async Task RemoveValue(TValue item)
         {
             var valueList = Values ?? new List<TValue>();
-            if (valueList.Contains(item))
+            if (valueList.Contains(item)){
+                var idx = valueList.IndexOf(item);
                 valueList.Remove(item);
+                
+                if(ColourValues != null && ColourValues.Count != 0){
+                    ColourValues.RemoveAt(idx);
+                }
+            }
 
             await ValuesChanged.InvokeAsync(valueList);
             EditContext?.NotifyFieldChanged(FieldIdentifier);
@@ -352,3 +367,23 @@ namespace LoreSoft.Blazor.Controls
 
     }
 }
+
+/**
+for(var idx = 0; idx < Values.Count ; idx++)
+{
+    <div class="typeahead-multi-value" >
+        <div class="typeahead-multi-value-label">
+            @SelectedTemplate(Values[idx])
+        </div>
+        <button type="button"
+                class="typeahead-multi-value-clear"
+                title="Remove Item"
+                disabled="@Disabled"
+                @onclick="@(() => RemoveValue(Values[idx]))">
+            <svg height="14" width="14" viewBox="0 0 20 20" aria-hidden="true" focusable="false" class="typeahead-svg">
+                <path d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z" />
+            </svg>
+        </button>
+    </div>
+}
+*/
