@@ -1,4 +1,4 @@
-﻿@typeparam TItem
+@typeparam TItem
 @typeparam TValue
 @inherits TypeaheadBase<TItem, TValue>
 
@@ -12,11 +12,9 @@
         <div class="typeahead-value-container">
             @if (IsMultiselect() && Values != null && Values.Count > 0)
             {
-                var idx = 0;
-                
                 foreach (var value in Values)
                 {
-                    <div class="typeahead-multi-value" style="@getColourStyling(idx)">
+                    <div class="typeahead-multi-value" style="@ValueStyle(value)">
                         <div class="typeahead-multi-value-label">
                             @SelectedTemplate(value)
                         </div>
@@ -30,8 +28,6 @@
                             </svg>
                         </button>
                     </div>
-
-                    idx++;
                 }
             }
             else if (!IsMultiselect() && Value != null)
