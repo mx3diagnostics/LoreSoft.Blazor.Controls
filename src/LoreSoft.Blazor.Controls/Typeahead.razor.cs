@@ -87,7 +87,7 @@ namespace LoreSoft.Blazor.Controls
         public RenderFragment FooterTemplate { get; set; }
 
         [Parameter]
-        public Func<TValue, string> ValueStyle { get; set; }
+        public Func<TValue, string> ValueStyle { get; set; } = (x) => null;
 
 
         [Parameter]
