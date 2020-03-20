@@ -87,7 +87,7 @@ namespace LoreSoft.Blazor.Controls
         public RenderFragment FooterTemplate { get; set; }
 
         [Parameter]
-        public Func<TValue, string> ValueStyle { get; set; } = (x) => null;
+        public Func<TValue, string> CustomValueClassProvider { get; set; } = (x) => null;
 
 
         [Parameter]
@@ -345,6 +345,15 @@ namespace LoreSoft.Blazor.Controls
                 return;
 
             SearchResults = new List<TItem>(Items);
+        }
+
+
+        protected string GetValueClassString(TValue value)
+        {
+            if (CustomValueClassProvider != null)
+                return "typeahead-multi-value " + CustomValueClassProvider(value);
+            else
+                return "typeahead-multi-value";
         }
 
     }
