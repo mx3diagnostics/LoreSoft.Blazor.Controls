@@ -1,18 +1,16 @@
+"use strict";
+
 window.BlazorControls = {
     assemblyname: 'LoreSoft.Blazor.Controls',
-    setFocus: (element) => {
-        if (!element)
-            return;
-
+    setFocus: function setFocus(element) {
+        if (!element) return;
         element.focus();
     },
-    isFocus: (element) => {
-        if(!element)
-            return false;
-        
+    isFocus: function isFocus(element) {
+        if (!element) return false;
         return element === document.activeElement;
     },
-    preventEnter: (element, disabled) => {
+    preventEnter: function preventEnter(element, disabled) {
         if (!element) {
             console.log("Error: preventEnter() element not found");
             return;
@@ -23,12 +21,11 @@ window.BlazorControls = {
         else
             element.removeEventListener('keydown', BlazorControls.preventEnterHandler);
     },
-    preventEnterHandler: (event) => {
-        const key = event.key;
+    preventEnterHandler: function preventEnterHandler(event) {
+        var key = event.key;
 
         if (key === "Enter") {
             event.preventDefault();
         }
     }
-
 };
