@@ -1,4 +1,4 @@
-﻿.typeahead-container {
+.typeahead-container {
     position: relative;
     box-sizing: border-box;
 }
@@ -236,6 +236,9 @@
 .typeahead-option-no-records,
 .typeahead-option-loading {
     padding: .5rem;
+}
+
+.typeahead-option-loading {
     opacity: .5;
 }
 
